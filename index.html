@@ -1,9 +1,10 @@
 ﻿<!DOCTYPE html>
 
 <!-- Reference to the D3.js script file -->
-<script src="http://d3js.org/d3.v5.min.js"></script>
-<script src="https://d3js.org/d3-geo-projection.v2.min.js"></script>
+<script src="http://d3js.org/d3.v4.min.js"></script>
 <script src="assets/jsscripts/soccer.js"></script>
+<script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3-legend/2.25.6/d3-legend.min.js"></script>
 
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
     <head>
@@ -30,9 +31,19 @@
             </div>
         </div>
 
+        <div id="nav_block" class="nav_section">
+            Navigation
+        </div>
+
+        <div id="legend_block" class="legend_section">
+            <svg id="legend" width="1450" height="20"></svg>
+            <hr class="style1" />
+        </div>
+
         <!-- Visualization Section : Martini GLASS Structure -->
         <div id="svg_block" class="viz_section">
-            <svg id="dataviz" width="800" height="600"></svg>
+            <div id="tooltip"></div>
+            <svg id="dataviz" width="1450" height="600"></svg>            
         </div>
 
         <!-- Footer Section -->
@@ -44,6 +55,9 @@
 </html>
 
 <script>
+    var margin = { top: 60, right: 10, bottom: 70, left: 10 };
+    var width = 1400 - margin.left - margin.right;
+    var height = 600 - margin.top - margin.bottom;
 
-
+    visualization_1(margin, width, height);
 </script>

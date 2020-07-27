@@ -1,36 +1,80 @@
 ﻿<!DOCTYPE html>
 <meta charset="utf-8">
+<style>
 
-<!-- Load d3.js -->
-<script src="https://d3js.org/d3.v4.js"></script>
-<script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
-<script src="https://d3js.org/d3-geo-projection.v2.min.js"></script>
+    body {
+        font: 10px sans-serif;
+    }
 
-<!-- Create an element where the map will take place -->
-<svg id="my_dataviz" width="400" height="300"></svg>
+    .axis path,
+    .axis line {
+        fill: none;
+        stroke: #000;
+        shape-rendering: crispEdges;
+    }
 
-<script>
-    var svg = d3.select("svg"),
-        width = +svg.attr("width"),
-        height = +svg.attr("height");
+    .point {
+        stroke: #000;
+    }
+</style>
+<body>
+    <script src="//d3js.org/d3.v4.min.js"></script>
+    <script>
 
-    // Map and projection
-    var projection = d3.geoNaturalEarth()
-        .scale(width / 1.3 / Math.PI)
-        .translate([width / 2, height / 2])
+        var margin = { top: 20, right: 20, bottom: 30, left: 40 },
+            width = 960 - margin.left - margin.right,
+            height = 500 - margin.top - margin.bottom;
 
-    // Load external data and boot
-    d3.json("https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/world.geojson", function (data) {
+        var x = d3.scaleBand().range([0, width]);
+        var y = d3.scaleLinear().range([height, 0]);
 
-        // Draw the map
-        svg.append("g")
-            .selectAll("path")
-            .data(data.features)
-            .enter().append("path")
-            .attr("fill", "#69b3a2")
-            .attr("d", d3.geoPath()
-                .projection(projection)
-            )
-            .style("stroke", "#fff")
-    })
-</script>
+        var svg = d3.select("body").append("svg")
+            .attr("width", width + margin.left + margin.right)
+            .attr("height", height + margin.top + margin.bottom)
+            .append("g")
+            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+        d3.csv("http://localhost/data/Data.csv", function (error, data) {
+            if (error) throw error;
+
+            // Compute the series names ("y1", "y2", etc.) from the loaded CSV.
+            var seriesNames = d3.keys(data[0])
+                .filter(function (d) { return d !== "time"; })
+                .sort();
+
+            // Map the data to an array of arrays of {x, y} tuples.
+            var series = seriesNames.map(function (series) {
+                return data.map(function (d) {
+                    return { x: d.time, y: +d[series] };
+                });
+            });
+
+            // Compute the scales’ domains.
+            x.domain(data.map(function (d) { return d.time; }));
+            y.domain(d3.extent(d3.merge(series), function (d) { return d.y; }));
+
+            // Add the x-axis.
+            svg.append("g")
+                .attr("class", "x axis")
+                .attr("transform", "translate(0," + height + ")")
+                .call(d3.axisBottom(x));
+
+            // Add the y-axis.
+
+
+            // Add the points!
+            svg.selectAll(".series")
+                .data(series)
+                .enter().append("g")
+                .attr("class", "series")
+                .style("fill", "red")
+                .selectAll(".point")
+                .data(function (d) { return d; })
+                .enter().append("circle")
+                .attr("class", "point")
+                .attr("r", 4.5)
+                .attr("cx", function (d) { return x(d.x); })
+                .attr("cy", function (d) { return y(d.y); });
+        });
+
+    </script>

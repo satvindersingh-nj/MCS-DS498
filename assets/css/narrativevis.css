@@ -9,7 +9,7 @@ rect {
 
 .header_section {
     border:none;
-    width: 900px;
+    width: 1400px;
     height: 50px;
     margin:auto;
 }
@@ -18,7 +18,7 @@ rect {
     position: relative;
     color: red;
     overflow: hidden;
-    font-size: 35px;
+    font-size: 42px;
     font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
     .header_text:after {
@@ -32,11 +32,11 @@ rect {
 
 .message_section {
     border: none;
-    width: 900px;
+    width: 1400px;
     height: 100px;
     position: absolute;
     left: 50%;
-    top: 5%;
+    top: 6%;
     transform: translate(-50%, 5%);
 }
 
@@ -44,26 +44,51 @@ rect {
     position: relative;
     color: black;
     overflow: hidden;
-    font-size: 14px;
+    font-size: 16px;
     text-align: left;
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     margin: auto;
     padding-top: 1em;
 }
 
+.nav_section {
+    border: none;
+    width: 1400px;
+    height: 50px;
+    position: absolute;
+    left: 50%;
+    top: 15%;
+    transform: translate(-50%, 50%);
+    align-content:end;
+    text-align:right;
+}
+
+.legend_section {
+    border: none;
+    width: 1400px;
+    height: 50px;
+    position: absolute;
+    left: 50%;
+    top: 17%;
+    transform: translate(-50%, 50%);
+    align-content: end;
+    text-align: right;
+}
+
 .viz_section {
-    border: solid;
-    width: 900px;
+    border: none;
+    width: 1400px;
     height: 600px;
     position: absolute;
     left: 50%;
     top: 47%;
     transform: translate(-50%, -47%);
+    align-content: center;
 }
 
 .footer_section {
     border: none;
-    width: 900px;
+    width: 1400px;
     height: 50px;
     position: absolute;
     left: 50%;
@@ -88,4 +113,29 @@ hr.style1 {
 
 hr.style2 {
     border-top: 3px double #8c8b8b;
+}
+
+.chart {
+    fill: red;
+}
+
+#tooltip {
+    opacity: 0;
+    position: absolute;
+    text-align: center;
+    width: 60px;
+    height: 40px;
+    background: white;
+    border: 0px;
+}
+
+.box {
+    width: 120px;
+    height: 30px;
+    border: 1px solid #999;
+    font-size: 18px;
+    color: #1c87c9;
+    background-color: #eee;
+    border-radius: 5px;
+    box-shadow: 4px 4px #ccc;
 }
