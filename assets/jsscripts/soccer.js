@@ -1,6 +1,5 @@
 ﻿function visualization_1(margin, width, height) {
 
-    alert(1);
     var x = d3.scaleBand().range([0, width]);
     var y = d3.scaleLinear().range([height, 0]);
 
