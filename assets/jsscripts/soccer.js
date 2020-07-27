@@ -13,7 +13,7 @@
             "translate(" + margin.left + "," + margin.top + ")");
 
     //Read the data
-    d3.csv("http://localhost/data/Data.csv", function (error, data) {
+    d3.csv("https://satvindersingh-nj.github.io/MCS-DS498/data/Data.csv", function (error, data) {
 
         if (error) throw error;
 
