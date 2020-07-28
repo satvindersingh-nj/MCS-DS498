@@ -3,6 +3,7 @@
 <!-- Reference to the D3.js script file -->
 <script src="https://d3js.org/d3.v4.min.js"></script>
 <script src="https://satvindersingh-nj.github.io/MCS-DS498/assets/jsscripts/soccer.js"></script>
+<!--<script src="http://localhost/assets/jsscripts/soccer.js"></script>-->
 <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-legend/2.25.6/d3-legend.min.js"></script>
 
@@ -24,9 +25,8 @@
 
         <!-- Message Section : Message that is being communicated -->
         <div id="message_block" class="message_section">
-            <div class="message_text">
-                The Manchester United Football Club have won more trophies than any other professional club in English Football with a total of 20 Premier League Titles, 12 FA Cups, 5 League Cups and a record 21 FA Community Shields.
-                Founded in 1878 as Newton Heath LYR Football Club was renamed to Manchester United in 1902 and moved to Old Trafford, Manchester, UK in 1910. It is one of the most popular football clubs in the world both in terms of
+            <div class="message_text_large">
+                The Manchester United Football Club was founded in 1878 as Newton Heath LYR Football Club and was renamed to Manchester United in 1902. In 1910 Manchester United moved to Old Trafford in Manchester. It is one of the most popular football clubs in the world both in terms of
                 attendance and in terms of earnings with an annual revenue of over US&#36; 796.4 million in 2019.
             </div>
         </div>
@@ -41,6 +41,11 @@
         </div>
 
         <!-- Visualization Section : Martini GLASS Structure -->
+        <div id="left_message_block" class="left_message_section">
+            <div class="message_text_small">
+                Manchester United have won more trophies than any other professional club in English Football with a total of 20 Premier League Titles, 12 FA Cups, 5 League Cups and a record 17 FA Community Shields since 1907.
+            </div>
+        </div>
         <div id="svg_block" class="viz_section">
             <div id="tooltip"></div>
             <svg id="dataviz" width="1450" height="600"></svg>            
@@ -55,7 +60,7 @@
 </html>
 
 <script>
-    var margin = { top: 60, right: 10, bottom: 70, left: 10 };
+    var margin = { top: 60, right: 10, bottom: 70, left: 200 };
     var width = 1400 - margin.left - margin.right;
     var height = 600 - margin.top - margin.bottom;
 

@@ -14,6 +14,7 @@
 
     //Read the data
     d3.csv("https://satvindersingh-nj.github.io/MCS-DS498/data/Data.csv", function (error, data) {
+    //d3.csv("http://localhost/data/Data.csv", function (error, data) {
 
         if (error) throw error;
 
@@ -21,6 +22,10 @@
             d.year= d.year;
             d.winner = +d.winner;
             d.cup = +d.cup;
+            d.desc = d.desc;
+            d.points = +d.points;
+            d.GF = d.GF;
+            d.GA = d.GA;
         });
 
         // Add X axis --> it is a date format
@@ -35,6 +40,10 @@
         // Add Y axis
         y.domain([0, 4]);
 
+        // Initialize the tooltip
+        var tooltip = d3.select("#tooltip")
+            .style("opacity", 0);
+
         // Initialize dots with group a
         svg.selectAll("coll")
             .data(data)
@@ -48,6 +57,15 @@
                 return "white";
             })
             .attr("transform", "translate(15,-10)")
+            .on("mouseover", function (d) {
+
+                tooltip.style("opacity", 1)
+                    .style("left", (d3.event.pageX - 256) + "px")
+                    .style("top", (d3.event.pageY - 160) + "px")
+                    .html("<strong>Year: </strong>" + d.year + "<br/><font size='-1'><strong>" + d.desc + "</strong></font><br/><strong>Points: </strong>" + d.points + "<br/><strong>Goals (GF - GA): </strong>" + d.GF + " - " + d.GA)
+                    .translate("transform", "translate(25,100)");
+            })
+            .on("mouseout", function () { tooltip.style("opacity", 0); })
             .transition().duration(3000).delay(500)
             .attr("cy", function (d) {
                 return (d.winner == 1) ? y(d.cup) : 0;
@@ -63,6 +81,7 @@
                 }
             })
             .attr("transform", "translate(15,57)");
+
     });
 
     var legend = d3.select("#legend");
@@ -89,9 +108,8 @@
         .attr("r", 10)
         .style("fill", "#8b0000");
 
-
-    legend.append("text").attr("x", initPosition + 15).attr("y", 12).text("Premier League").attr("alignment-baseline", "middle").attr("class", "message_text");
-    legend.append("text").attr("x", initPosition + 215).attr("y", 12).text("League Cup").attr("alignment-baseline", "middle").attr("class", "message_text");
-    legend.append("text").attr("x", initPosition + 415).attr("y", 12).text("FA Cup").attr("alignment-baseline", "middle").attr("class", "message_text");
-    legend.append("text").attr("x", initPosition + 615).attr("y", 12).text("Community Shields").attr("alignment-baseline", "middle").attr("class", "message_text");
+    legend.append("text").attr("x", initPosition + 15).attr("y", 12).text("Premier League").attr("alignment-baseline", "middle").attr("class", "message_text_small");
+    legend.append("text").attr("x", initPosition + 215).attr("y", 12).text("League Cup").attr("alignment-baseline", "middle").attr("class", "message_text_small");
+    legend.append("text").attr("x", initPosition + 415).attr("y", 12).text("FA Cup").attr("alignment-baseline", "middle").attr("class", "message_text_small");
+    legend.append("text").attr("x", initPosition + 615).attr("y", 12).text("Community Shields").attr("alignment-baseline", "middle").attr("class", "message_text_small");
 }
