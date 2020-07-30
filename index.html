@@ -16,7 +16,7 @@
         <link rel="stylesheet" type="text/css" href="assets/css/narrativevis.css" />
     </head>
 
-    <body>
+    <body onload="init()">
         <!-- Header Section -->
         <div id="header_block" class="header_section">
             <div class="header_text">Manchester United</div>
@@ -32,23 +32,29 @@
         </div>
 
         <div id="nav_block" class="nav_section">
-            Navigation
-        </div>
-
-        <div id="legend_block" class="legend_section">
-            <svg id="legend" width="1450" height="20"></svg>
-            <hr class="style1" />
-        </div>
-
-        <!-- Visualization Section : Martini GLASS Structure -->
-        <div id="left_message_block" class="left_message_section">
-            <div class="message_text_small">
-                Manchester United have won more trophies than any other professional club in English Football with a total of 20 Premier League Titles, 12 FA Cups, 5 League Cups and a record 17 FA Community Shields since 1907.
+            <div class="pagination">
+                <a href="#" onclick="page(1)" id="page1" class="active">1</a>
+                <a href="#" onclick="page(2)" id="page2">2</a>
+                <a href="#" onclick="page(3)" id="page3">3</a>
             </div>
         </div>
-        <div id="svg_block" class="viz_section">
-            <div id="tooltip"></div>
-            <svg id="dataviz" width="1450" height="600"></svg>            
+
+        <div id="scene01">
+            <div id="legend_block" class="legend_section">
+                <svg id="legend" width="1450" height="20"></svg>
+                <hr class="style1" />
+            </div>
+
+            <!-- Visualization Section  -->
+            <div id="left_message_block" class="left_message_section">
+                <div id="message" class="message_text_small">
+                    <p><font color="#ff0000" size="5"><strong>The Red Devils!</strong></font></p>Manchester United have won more trophies than any other professional club in English Football with a total of 20 Premier League Titles, 12 FA Cups, 5 League Cups and a record 17 FA Community Shields since 1907.
+                </div>
+            </div>
+            <div id="svg_block" class="viz_section">
+                <div id="tooltip"></div>
+                <svg id="dataviz" width="1450" height="600"></svg>
+            </div>
         </div>
 
         <!-- Footer Section -->
@@ -60,9 +66,73 @@
 </html>
 
 <script>
-    var margin = { top: 60, right: 10, bottom: 70, left: 200 };
-    var width = 1400 - margin.left - margin.right;
-    var height = 600 - margin.top - margin.bottom;
+    function init() {
+        var margin = { top: 60, right: 10, bottom: 70, left: 200 };
+        var width = 1380 - margin.left - margin.right;
+        var height = 600 - margin.top - margin.bottom;
 
-    visualization_1(margin, width, height);
+        visualization_1(margin, width, height);
+    };
+
+    // Page Handler
+    function page(id) {
+        //Initialize 
+        var margin = { top: 60, right: 10, bottom: 70, left: 200 };
+        var width = 1400 - margin.left - margin.right;
+        var height = 600 - margin.top - margin.bottom;
+
+        if (id === 1) {
+            // Remove everything associated with the SVG tag
+            d3.selectAll("svg").remove();
+            // Initialize
+            d3.select("#svg_block")
+                .append("svg")
+                .attr("id", "dataviz")
+                .attr("width", 1450)
+                .attr("height", 600);
+            document.getElementById("message").innerHTML = "<p><font color=\"#ff0000\" size=\"5\"><strong>The Red Devils!</strong></font></p>Manchester United have won more trophies than any other professional club in English Football with a total of 20 Premier League Titles, 12 FA Cups, 5 League Cups and a record 17 FA Community Shields since 1907.";
+            // Call the Visualization
+            visualization_1(margin, width, height);
+            // Update the navigation buttons
+            document.getElementById("page1").classList.add("active");
+            document.getElementById("page2").classList.remove("active");
+            document.getElementById("page3").classList.remove("active");
+        }
+
+        if (id === 2) {
+            // Remove everything associated with the SVG tag
+            d3.selectAll("svg").remove();
+            // Initialize
+            d3.select("#svg_block")
+                .append("svg")
+                .attr("id", "dataviz")
+                .attr("width", 1450)
+                .attr("height", 600);
+            document.getElementById("message").innerHTML = "<p><font color=\"#ff0000\" size=\"5\"><strong>The Managers</strong></font></p>Manchester United have won more trophies than any other professional club in English Football with a total of 20 Premier League Titles, 12 FA Cups, 5 League Cups and a record 17 FA Community Shields since 1907.";
+            // Call the Visualization
+            visualization_2(margin, width, height);
+
+            document.getElementById("page1").classList.remove("active");
+            document.getElementById("page2").classList.add("active");
+            document.getElementById("page3").classList.remove("active");
+        }
+
+        if (id === 3) {
+            // Remove everything associated with the SVG tag
+            d3.selectAll("svg").remove();
+            // Initialize
+            d3.select("#svg_block")
+                .append("svg")
+                .attr("id", "dataviz")
+                .attr("width", 1450)
+                .attr("height", 600);
+            document.getElementById("message").innerHTML = "<p><font color=\"#ff0000\" size=\"5\"><strong>The Players</strong></font></p>Manchester United have won more trophies than any other professional club in English Football with a total of 20 Premier League Titles, 12 FA Cups, 5 League Cups and a record 17 FA Community Shields since 1907.";
+            // Call the Visualization
+            visualization_3(margin, width, height);
+
+            document.getElementById("page1").classList.remove("active");
+            document.getElementById("page2").classList.remove("active");
+            document.getElementById("page3").classList.add("active");
+        }
+    }
 </script>
