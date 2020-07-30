@@ -2,7 +2,6 @@
 
 <!-- Reference to the D3.js script file -->
 <script src="https://d3js.org/d3.v4.min.js"></script>
-<!--<script src="https://satvindersingh-nj.github.io/MCS-DS498/assets/jsscripts/soccer.js"></script>-->
 <script src="assets/jsscripts/soccer.js"></script>
 <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-legend/2.25.6/d3-legend.min.js"></script>
@@ -26,8 +25,7 @@
         <!-- Message Section : Message that is being communicated -->
         <div id="message_block" class="message_section">
             <div class="message_text_large">
-                The Manchester United Football Club was founded in 1878 as Newton Heath LYR Football Club and was renamed to Manchester United in 1902. In 1910 Manchester United moved to Old Trafford in Manchester. It is one of the most popular football clubs in the world both in terms of
-                attendance and in terms of earnings with an annual revenue of over US&#36; 796.4 million in 2019.
+                Sir Alex Ferguson is the most successful manager in British football history, winning 13 Premier League titles with Manchester United. Can the period when Alex Ferguson was managing Manchester United be called "The Golden Era" of Manchester United?
             </div>
         </div>
 
@@ -36,19 +34,22 @@
                 <a href="#" onclick="page(1)" id="page1" class="active">1</a>
                 <a href="#" onclick="page(2)" id="page2">2</a>
                 <a href="#" onclick="page(3)" id="page3">3</a>
+                <a href="#" onclick="page(4)" id="page4">4</a>
+                <a href="#" onclick="page(5)" id="page3">5</a>
             </div>
         </div>
 
         <div id="scene01">
             <div id="legend_block" class="legend_section">
-                <svg id="legend" width="1450" height="20"></svg>
                 <hr class="style1" />
             </div>
 
             <!-- Visualization Section  -->
             <div id="left_message_block" class="left_message_section">
                 <div id="message" class="message_text_small">
-                    <p><font color="#ff0000" size="5"><strong>The Red Devils!</strong></font></p>Manchester United have won more trophies than any other professional club in English Football with a total of 20 Premier League Titles, 12 FA Cups, 5 League Cups and a record 17 FA Community Shields since 1907.
+                    <p><font color="#ff0000" size="4"><strong>The Champs</strong></font></p>Manchester United have won more Premier League tropies than any other professional football team, with the most Champions League qualifications.
+                    <p>&nbsp;</p>
+                    <p><font size="2">Hover over each dot for the scorecard.</font></p>
                 </div>
             </div>
             <div id="svg_block" class="viz_section">
@@ -90,13 +91,15 @@
                 .attr("id", "dataviz")
                 .attr("width", 1450)
                 .attr("height", 600);
-            document.getElementById("message").innerHTML = "<p><font color=\"#ff0000\" size=\"5\"><strong>The Red Devils!</strong></font></p>Manchester United have won more trophies than any other professional club in English Football with a total of 20 Premier League Titles, 12 FA Cups, 5 League Cups and a record 17 FA Community Shields since 1907.";
+            document.getElementById("message").innerHTML = "<p><font color=\"#ff0000\" size=\"4\"><strong>The Champs</strong></font></p>Manchester United have won more Premier League tropies than any other professional football team, with the most Champions League qualifications.<p>&nbsp;</p><p><font size=\"2\">Hover over each dot for the scorecard.</font></p>";
             // Call the Visualization
             visualization_1(margin, width, height);
             // Update the navigation buttons
             document.getElementById("page1").classList.add("active");
             document.getElementById("page2").classList.remove("active");
             document.getElementById("page3").classList.remove("active");
+            document.getElementById("page4").classList.remove("active");
+            document.getElementById("page5").classList.remove("active");
         }
 
         if (id === 2) {
@@ -108,13 +111,15 @@
                 .attr("id", "dataviz")
                 .attr("width", 1450)
                 .attr("height", 600);
-            document.getElementById("message").innerHTML = "<p><font color=\"#ff0000\" size=\"5\"><strong>The Managers</strong></font></p>Manchester United have won more trophies than any other professional club in English Football with a total of 20 Premier League Titles, 12 FA Cups, 5 League Cups and a record 17 FA Community Shields since 1907.";
+            document.getElementById("message").innerHTML = "<p><font color=\"#ff0000\" size=\"4\"><strong>Pre \"Alex\" Era</strong></font></p>Manchester United positions before Sir Alex Ferguson made a managerial debut at United.<p>&nbsp;</p><p><font size=\"2\">Hover over each dot for the scorecard.</font></p>";
             // Call the Visualization
             visualization_2(margin, width, height);
 
             document.getElementById("page1").classList.remove("active");
             document.getElementById("page2").classList.add("active");
             document.getElementById("page3").classList.remove("active");
+            document.getElementById("page4").classList.remove("active");
+            document.getElementById("page5").classList.remove("active");
         }
 
         if (id === 3) {
@@ -126,13 +131,35 @@
                 .attr("id", "dataviz")
                 .attr("width", 1450)
                 .attr("height", 600);
-            document.getElementById("message").innerHTML = "<p><font color=\"#ff0000\" size=\"5\"><strong>The Players</strong></font></p>Manchester United have won more trophies than any other professional club in English Football with a total of 20 Premier League Titles, 12 FA Cups, 5 League Cups and a record 17 FA Community Shields since 1907.";
+            document.getElementById("message").innerHTML = "<p><font color=\"#ff0000\" size=\"4\"><strong>The \"Alex\" Era</strong></font></p>In 2013 Sir Alex Ferguson takes over as manager for Manchester United.<p>&nbsp;</p><p><font size=\"2\">Hover over each dot for the scorecard.</font></p>";
             // Call the Visualization
             visualization_3(margin, width, height);
 
             document.getElementById("page1").classList.remove("active");
             document.getElementById("page2").classList.remove("active");
             document.getElementById("page3").classList.add("active");
+            document.getElementById("page4").classList.remove("active");
+            document.getElementById("page5").classList.remove("active");
+        }
+
+        if (id === 4) {
+            // Remove everything associated with the SVG tag
+            d3.selectAll("svg").remove();
+            // Initialize
+            d3.select("#svg_block")
+                .append("svg")
+                .attr("id", "dataviz")
+                .attr("width", 1450)
+                .attr("height", 600);
+            document.getElementById("message").innerHTML = "<p><font color=\"#ff0000\" size=\"4\"><strong>Post \"Alex\" Era</strong></font></p>In June 2013, Sir Alex Ferguson resigns as manager for Manchester United on health reasons.<p>&nbsp;</p><p><font size=\"2\">Hover over each dot for the scorecard.</font></p>";
+            // Call the Visualization
+            visualization_4(margin, width, height);
+
+            document.getElementById("page1").classList.remove("active");
+            document.getElementById("page2").classList.remove("active");
+            document.getElementById("page3").classList.remove("active");
+            document.getElementById("page4").classList.add("active");
+            document.getElementById("page5").classList.remove("active");
         }
     }
 </script>
