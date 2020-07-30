@@ -13,7 +13,7 @@
             "translate(" + margin.left + "," + margin.top + ")");
 
     await d3.csv("https://satvindersingh-nj.github.io/MCS-DS498/data/data2.csv", function (error, data) {
-    //d3.csv("http://localhost/data/data2.csv", function (error, data) {
+    //await d3.csv("http://localhost/data/data2.csv", function (error, data) {
 
         if (error) throw error;
 
@@ -143,7 +143,7 @@ async function visualization_2(margin, width, height) {
 
 };
 
-function visualization_3(margin, width, height) {
+async function visualization_3(margin, width, height) {
     console.log("visual-1");
     var x = d3.scaleBand().range([0, width]);
     var y = d3.scaleLinear().range([height, 0]);
