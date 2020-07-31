@@ -35,7 +35,7 @@
                 <a href="#" onclick="page(2)" id="page2">2</a>
                 <a href="#" onclick="page(3)" id="page3">3</a>
                 <a href="#" onclick="page(4)" id="page4">4</a>
-                <a href="#" onclick="page(5)" id="page3">5</a>
+                <a href="#" onclick="page(5)" id="page5">5</a>
             </div>
         </div>
 
@@ -72,7 +72,7 @@
         var width = 1380 - margin.left - margin.right;
         var height = 600 - margin.top - margin.bottom;
 
-        visualization_1(margin, width, height);
+        visualization_1(margin, width, height, true);
     };
 
     // Page Handler
@@ -93,7 +93,7 @@
                 .attr("height", 600);
             document.getElementById("message").innerHTML = "<p><font color=\"#ff0000\" size=\"4\"><strong>The Champs</strong></font></p>Manchester United have won more Premier League tropies than any other professional football team, with the most Champions League qualifications.<p>&nbsp;</p><p><font size=\"2\">Hover over each dot for the scorecard.</font></p>";
             // Call the Visualization
-            visualization_1(margin, width, height);
+            visualization_1(margin, width, height, true);
             // Update the navigation buttons
             document.getElementById("page1").classList.add("active");
             document.getElementById("page2").classList.remove("active");
@@ -113,7 +113,7 @@
                 .attr("height", 600);
             document.getElementById("message").innerHTML = "<p><font color=\"#ff0000\" size=\"4\"><strong>Pre \"Alex\" Era</strong></font></p>Manchester United positions before Sir Alex Ferguson made a managerial debut at United.<p>&nbsp;</p><p><font size=\"2\">Hover over each dot for the scorecard.</font></p>";
             // Call the Visualization
-            visualization_2(margin, width, height);
+            visualization_2(margin, width, height, true);
 
             document.getElementById("page1").classList.remove("active");
             document.getElementById("page2").classList.add("active");
@@ -133,7 +133,7 @@
                 .attr("height", 600);
             document.getElementById("message").innerHTML = "<p><font color=\"#ff0000\" size=\"4\"><strong>The \"Alex\" Era</strong></font></p>In 2013 Sir Alex Ferguson takes over as manager for Manchester United.<p>&nbsp;</p><p><font size=\"2\">Hover over each dot for the scorecard.</font></p>";
             // Call the Visualization
-            visualization_3(margin, width, height);
+            visualization_3(margin, width, height, true);
 
             document.getElementById("page1").classList.remove("active");
             document.getElementById("page2").classList.remove("active");
@@ -153,7 +153,7 @@
                 .attr("height", 600);
             document.getElementById("message").innerHTML = "<p><font color=\"#ff0000\" size=\"4\"><strong>Post \"Alex\" Era</strong></font></p>In June 2013, Sir Alex Ferguson resigns as manager for Manchester United on health reasons.<p>&nbsp;</p><p><font size=\"2\">Hover over each dot for the scorecard.</font></p>";
             // Call the Visualization
-            visualization_4(margin, width, height);
+            visualization_4(margin, width, height, true);
 
             document.getElementById("page1").classList.remove("active");
             document.getElementById("page2").classList.remove("active");
