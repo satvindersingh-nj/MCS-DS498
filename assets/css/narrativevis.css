@@ -161,7 +161,7 @@ hr.style2 {
     position: absolute;
     text-align: left;
     width: 210px;
-    height: 60px;
+    height: 75px;
     padding: 8px;
     background: #FE8484;
     border: 1px;
@@ -174,8 +174,8 @@ hr.style2 {
 .tooltip_small {
     position: absolute;
     text-align: left;
-    width: 150px;
-    height: 50px;
+    width: 210px;
+    height: 65px;
     padding: 8px;
     background: #FE8484;
     border: 1px;

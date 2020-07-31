@@ -91,69 +91,14 @@ function DrawVisualization_1(svg, data, duration, delay, width, height, xDomain,
         )
         .attr("transform", "translate(12,0)");
 
-    // Initialize the tooltip
-    var tooltip = d3.select("#tooltip")
-        .style("opacity", 0);
-
-    svg.selectAll("circle")
-        .data(data)
-        .enter().append("circle")
-        .attr("r", 6)
-        .attr("cx", function (d) { return xDomain(+d.year); })
-        .attr("cy", height)
-        .style("fill", "#ffffff")
-        .style("stroke", "#ff0000")
-        .attr("transform", "translate(12,0)")
-        .on("mouseover", function (d) {
-            if (d.pos == 1) {
-                tooltip.style("opacity", 1)
-                    .style("left", (d3.event.pageX - 256) + "px")
-                    .style("top", (d3.event.pageY - 210) + "px")
-                    .attr("class", "tooltip_large")
-                    .html("<strong>Year: </strong>" + d.year
-                        + "<br/><font size='-1'><strong>Premier League Champions"
-                        + "</strong></font><br/><strong>League Position: </strong>" + d.pos
-                        + "</strong></font><br/><strong>Points: </strong>" + d.points
-                        + "<br/><strong>Goals (GF - GA): </strong>" + d.GF + " - " + d.GA);
-            }
-            else if (d.pos > 1 && d.pos < 5) {
-                tooltip.style("opacity", 1)
-                    .style("left", (d3.event.pageX - 256) + "px")
-                    .style("top", (d3.event.pageY - 210) + "px")
-                    .attr("class", "tooltip_large")
-                    .html("<strong>Year: </strong>" + d.year
-                        + "<br/><font size='-1'><strong>Champions League Qualifier"
-                        + "</strong></font><br/><strong>League Position: </strong>" + d.pos
-                        + "</strong></font><br/><strong>Points: </strong>" + d.points
-                        + "<br/><strong>Goals (GF - GA): </strong>" + d.GF + " - " + d.GA);
-            }
-            else {
-                tooltip.style("opacity", 1)
-                    .style("left", (d3.event.pageX - 256) + "px")
-                    .style("top", (d3.event.pageY - 210) + "px")
-                    .attr("class", "tooltip_small")
-                    .html("<strong>Year: </strong>" + d.year
-                        + "</strong></font><br/><strong>League Position: </strong>" + d.pos
-                        + "</strong></font><br/><strong>Points: </strong>" + d.points
-                        + "<br/><strong>Goals (GF - GA): </strong>" + d.GF + " - " + d.GA);
-            }
-        })
-        .on("mouseout", function () { tooltip.style("opacity", 0); })
-        .transition().duration(duration).delay(delay)
-        .attr("cy", function (d) { return yDomain(+d.pos); })
-        .style("fill", function (d) {
-            if (d.pos == 1) return "#ff0000";
-            if (d.pos > 1 && d.pos < 5) return "#8b0000";
-            else return "#ffffff";
-        })
-        .attr("transform", "translate(12,0)");
+    dot_plot(svg, data, duration, delay, height, xDomain, yDomain) 
 
     // Line to indicate team has automatically qualified for the Champions and Europa Leagues
     line(svg, 0, 118, 1300, 118, 0.4, duration, delay);
     line(svg, 0, 138, 1300, 138, 0.4, duration, delay);
 
-    position_text(svg, 627, 115, "Automatic qualification for Champions League.", duration, delay);
-    position_text(svg, 627, 135, "Automatic qualification for Europa League.", duration, delay);
+    position_text(svg, 600, 115, "Automatic qualification for Champions League.", duration, delay);
+    position_text(svg, 600, 135, "Automatic qualification for Europa League.", duration, delay);
 }
 
 // Scene 2 - Preparing the Scene
@@ -204,10 +149,27 @@ async function visualization_2(margin, width, height, animation) {
                 .tickValues([1969, 1972, 1975, 1978, 1981, 1984, 1987, 1990, 1993, 1996, 1999, 2002, 2005, 2008, 2011, 2014, 2017, 2019]))
             .selectAll("text")
             .style("font-size", 14);
+        svg.append("text")
+            .attr("x", x(2016))
+            .attr("y", y(21.5))
+            .attr("opacity", "1")
+            .style("font-weight", "bold")
+            .attr("class", "annot")
+            .style("font-size", 16)
+            .text("Season");
 
         // Add Y axis
         svg.append("g")
             .call(d3.axisLeft(y).tickValues([19, 17, 15, 13, 11, 9, 7, 5, 4, 3, 1]));
+        svg.append("text")
+            .attr("x", x(3))
+            .attr("y", y(1))
+            .attr("opacity", "1")
+            .attr("class", "annot")
+            .style("font-size", 16)
+            .style("font-weight", "bold")
+            .attr("transform", "translate(-35,60) rotate(-90)")
+            .text("Position");
 
         DrawVisualization_2(svg, data, duration, delay, width, height, x, y);
     });
@@ -215,26 +177,27 @@ async function visualization_2(margin, width, height, animation) {
 // Scene 2 - Initialization
 function DrawVisualization_2(svg, data, duration, delay, width, height, xDomain, yDomain) {
 
-    data = data.filter(function (d) { return (d.year < 1993); });
+    data = data.filter(function (d) { return (d.year < 1987); });
 
     // Line to indicate team has automatically qualified for the Champions and Europa Leagues
     line(svg, 0, 118, 1300, 118, 0.4, duration, delay);
     line(svg, 0, 138, 1300, 138, 0.4, duration, delay);
 
     // Vertical line to mark beginning of Alex Ferguson Era
-    line(svg, xDomain(1992), height, xDomain(1992), 0, 0.7, duration, delay);
+    line(svg, xDomain(1986), height, xDomain(1986), 0, 0.7, duration, delay);
 
     line_plot(svg, data, duration, delay, height, xDomain, yDomain);   
     dot_plot(svg, data, duration, delay, height, xDomain, yDomain);
 
     // Horizontal lines
-    position_text(svg, 627, 115, "Automatic qualification for Champions League.", duration, delay);
-    position_text(svg, 627, 135, "Automatic qualification for Europa League.", duration, delay);
+    // Horizontal lines
+    position_text(svg, 600, 115, "Automatic qualification for Champions League.", duration, delay);
+    position_text(svg, 600, 135, "Automatic qualification for Europa League.", duration, delay);
 
     // Annotation using custom annot_line and position_text functions
-    annot_line(svg, xDomain(1992)-5, yDomain(1)-5, xDomain(1990), yDomain(-1), duration, delay);
-    position_text(svg, xDomain(1985), yDomain(-1), "Sir Alex Ferguson ", duration, delay);
-    position_text(svg, xDomain(1985), yDomain(-1)+15, "takes over as Manager", duration, delay);
+    annot_line(svg, xDomain(1986), yDomain(1) - 5, xDomain(1984), yDomain(-1), duration, delay);
+    position_text(svg, xDomain(1978), yDomain(-1), "1986 - Sir Alex Ferguson", duration, delay);
+    position_text(svg, xDomain(1978), yDomain(-1) + 15, "takes over as Manager", duration, delay);
 }
 
 // Scene 3 - Preparing the Scene
@@ -284,10 +247,27 @@ async function visualization_3(margin, width, height, animation) {
                 .tickValues([1969, 1972, 1975, 1978, 1981, 1984, 1987, 1990, 1993, 1996, 1999, 2002, 2005, 2008, 2011, 2014, 2017, 2019]))
             .selectAll("text")
             .style("font-size", 14);
+        svg.append("text")
+            .attr("x", x(2016))
+            .attr("y", y(21.5))
+            .attr("opacity", "1")
+            .style("font-weight", "bold")
+            .attr("class", "annot")
+            .style("font-size", 16)
+            .text("Season");
 
         // Add Y axis
         svg.append("g")
             .call(d3.axisLeft(y).tickValues([19, 17, 15, 13, 11, 9, 7, 5, 4, 3, 1]));
+        svg.append("text")
+            .attr("x", x(3))
+            .attr("y", y(1))
+            .attr("opacity", "1")
+            .attr("class", "annot")
+            .style("font-size", 16)
+            .style("font-weight", "bold")
+            .attr("transform", "translate(-35,60) rotate(-90)")
+            .text("Position");
 
         DrawVisualization_2(svg, data, 0, 0, width, height, x, y)
         DrawVisualization_3(svg, data, duration, delay, width, height, x, y)
@@ -296,7 +276,7 @@ async function visualization_3(margin, width, height, animation) {
 // Scene 3 - Initialization
 function DrawVisualization_3(svg, data, duration, delay, width, height, xDomain, yDomain) {
     // Filter the data for period between 1991 and 2013
-    data = data.filter(function (d) { return ((d.year > 1991) && (d.year < 2013)); });
+    data = data.filter(function (d) { return ((d.year > 1985) && (d.year < 2013)); });
 
     // Line to indicate team has automatically qualified for the Champions and Europa Leagues
     line(svg, 0, 118, 1300, 118, 0.4, duration, delay);
@@ -310,9 +290,9 @@ function DrawVisualization_3(svg, data, duration, delay, width, height, xDomain,
     dot_plot(svg, data, duration, delay, height, xDomain, yDomain);
 
     // Annotation using custom annot_line and position_text functions
-    annot_line(svg, xDomain(2012), yDomain(1) - 5, xDomain(2010), yDomain(-1), duration, delay);
-    position_text(svg, xDomain(2006), yDomain(-1), "Sir Alex Ferguson", duration, delay);
-    position_text(svg, xDomain(2006), yDomain(-1)+15, "resigns as Manager", duration, delay);
+    annot_line(svg, xDomain(2012), yDomain(1) - 5, xDomain(2014), yDomain(-1), duration, delay);
+    position_text(svg, xDomain(2015), yDomain(-1), "2012 - Sir Alex Ferguson", duration, delay);
+    position_text(svg, xDomain(2015), yDomain(-1) + 15, "resigns as Manager", duration, delay);
 };
 
 // Scene 4 - Preparing the Scene
@@ -362,10 +342,27 @@ async function visualization_4(margin, width, height, animation) {
                 .tickValues([1969, 1972, 1975, 1978, 1981, 1984, 1987, 1990, 1993, 1996, 1999, 2002, 2005, 2008, 2011, 2014, 2017, 2019]))
             .selectAll("text")
             .style("font-size", 14);
+        svg.append("text")
+            .attr("x", x(2016))
+            .attr("y", y(21.5))
+            .attr("opacity", "1")
+            .style("font-weight", "bold")
+            .attr("class", "annot")
+            .style("font-size", 16)
+            .text("Season");
 
         // Add Y axis
         svg.append("g")
             .call(d3.axisLeft(y).tickValues([19, 17, 15, 13, 11, 9, 7, 5, 4, 3, 1]));
+        svg.append("text")
+            .attr("x", x(3))
+            .attr("y", y(1))
+            .attr("opacity", "1")
+            .attr("class", "annot")
+            .style("font-size", 16)
+            .style("font-weight", "bold")
+            .attr("transform", "translate(-35,60) rotate(-90)")
+            .text("Position");
 
         DrawVisualization_2(svg, data, 0, 0, width, height, x, y)
         DrawVisualization_3(svg, data, 0, 0, width, height, x, y)
@@ -427,10 +424,27 @@ async function visualization_5(margin, width, height, animation) {
                 .tickValues([1969, 1972, 1975, 1978, 1981, 1984, 1987, 1990, 1993, 1996, 1999, 2002, 2005, 2008, 2011, 2014, 2017, 2019]))
             .selectAll("text")
             .style("font-size", 14);
+        svg.append("text")
+            .attr("x", x(2016))
+            .attr("y", y(21.5))
+            .attr("opacity", "1")
+            .style("font-weight", "bold")
+            .attr("class", "annot")
+            .style("font-size", 16)
+            .text("Season");
 
         // Add Y axis
         svg.append("g")
             .call(d3.axisLeft(y).tickValues([19, 17, 15, 13, 11, 9, 7, 5, 4, 3, 1]));
+        svg.append("text")
+            .attr("x", x(3))
+            .attr("y", y(1))
+            .attr("opacity", "1")
+            .attr("class", "annot")
+            .style("font-size", 16)
+            .style("font-weight", "bold")
+            .attr("transform", "translate(-35,60) rotate(-90)")
+            .text("Position");
 
         DrawVisualization_5(svg, data, duration, delay, width, height, x, y)
     });
@@ -440,14 +454,19 @@ async function visualization_5(margin, width, height, animation) {
 function DrawVisualization_5(svg, data, duration, delay, width, height, xDomain, yDomain) {
 
     svg.append("rect")
-        .attr("x", xDomain(1992))
+        .attr("x", xDomain(1986))
         .attr("y", yDomain(-2))
-        .attr("width", xDomain(2012) - xDomain(1992))
+        .attr("width", xDomain(2012) - xDomain(1986))
         .attr("height", yDomain(22))
         .attr("transform", "translate(12,0)")
         .style("fill", "#ff0000")
         .attr("opacity", "0.1");
 
+    // Vertical line to mark beginning of Alex Ferguson Era
+    line(svg, xDomain(1986), height, xDomain(1986), 0, 0.7, duration, delay);
+    line(svg, xDomain(2012), height, xDomain(2012), 0, 0.7, duration, delay);
+
+    // Plot the lines and dots
     line_plot(svg, data, duration, delay, height, xDomain, yDomain);
     dot_plot(svg, data, duration, delay, height, xDomain, yDomain);
 
@@ -455,28 +474,24 @@ function DrawVisualization_5(svg, data, duration, delay, width, height, xDomain,
     line(svg, 0, 118, 1300, 118, 0.4, duration, delay);
     line(svg, 0, 138, 1300, 138, 0.4, duration, delay);
 
-    // Vertical line to mark beginning of Alex Ferguson Era
-    line(svg, xDomain(1992), height, xDomain(1992), 0, 0.7, duration, delay);
-    line(svg, xDomain(2012), height, xDomain(2012), 0, 0.7, duration, delay);
-
     // Horizontal lines
-    position_text(svg, 627, 115, "Automatic qualification for Champions League.", 0, 300);
-    position_text(svg, 627, 135, "Automatic qualification for Europa League.", 0, 300);
+    position_text(svg, 600, 115, "Automatic qualification for Champions League.", 0, 300);
+    position_text(svg, 600, 135, "Automatic qualification for Europa League.", 0, 300);
 
     // Annotation using custom annot_line and position_text functions
-    annot_line(svg, xDomain(1992) - 5, yDomain(1) - 5, xDomain(1990), yDomain(-1), duration, delay);
-    position_text(svg, xDomain(1985), yDomain(-1), "Sir Alex Ferguson ", duration, delay);
-    position_text(svg, xDomain(1985), yDomain(-1) + 15, "takes over as Manager", duration, delay);
-    annot_line(svg, xDomain(2012), yDomain(1) - 5, xDomain(2010), yDomain(-1), duration, delay);
-    position_text(svg, xDomain(2006), yDomain(-1), "Sir Alex Ferguson", duration, delay);
-    position_text(svg, xDomain(2006), yDomain(-1) + 15, "resigns as Manager", duration, delay);
+    annot_line(svg, xDomain(1986), yDomain(1)- 5, xDomain(1984), yDomain(-1), duration, delay);
+    position_text(svg, xDomain(1978), yDomain(-1), "1986 - Sir Alex Ferguson", duration, delay);
+    position_text(svg, xDomain(1978), yDomain(-1) + 15, "takes over as Manager", duration, delay);
+    annot_line(svg, xDomain(2012), yDomain(1) - 5, xDomain(2014), yDomain(-1), duration, delay);
+    position_text(svg, xDomain(2015), yDomain(-1), "2012 - Sir Alex Ferguson", duration, delay);
+    position_text(svg, xDomain(2015), yDomain(-1) + 15, "resigns as Manager", duration, delay);
 
     // Conclusion
-    position_text(svg, xDomain(1995), 310, "Sir Alex Ferguson was manager for Manchester United ", duration, delay + 300);
-    position_text(svg, xDomain(1995), 325, "for 21 years (1992 - 2013) and during this tenure Manchester United", duration, delay + 300);
-    position_text(svg, xDomain(1995), 340, "won 13 Premier League championships and have qualified", duration, delay + 300);
-    position_text(svg, xDomain(1995), 355, "for the Champions League in every season. ", duration, delay + 300);
-    position_text(svg, xDomain(1999), 375, " --  The Golder Era -- ", duration, delay + 300, "annot_bold");
+    position_text(svg, xDomain(1993), 310, "Sir Alex Ferguson was manager for Manchester United ", duration, delay + 300);
+    position_text(svg, xDomain(1993), 325, "for 27 years (1986 - 2013) and during this tenure Manchester United", duration, delay + 300);
+    position_text(svg, xDomain(1993), 340, "won 13 Premier League championships and have qualified", duration, delay + 300);
+    position_text(svg, xDomain(1993), 355, "for the Champions League in 23 of the 27 seasons. ", duration, delay + 300);
+    position_text(svg, xDomain(1996), 375, " --  The Golder Era -- ", duration, delay + 300, "annot_bold");
 }
 
 async function visualization_6(margin, width, height) {
@@ -698,7 +713,8 @@ function dot_plot(svg, data, duration, delay, height, xDomain, yDomain) {
                         + "<br/><font size='-1'><strong>Champions League Qualifier"
                         + "</strong></font><br/><strong>League Position: </strong>" + d.pos
                         + "</strong></font><br/><strong>Points: </strong>" + d.points
-                        + "<br/><strong>Goals (GF - GA): </strong>" + d.GF + " - " + d.GA);
+                        + "<br/><strong>Goals (GF - GA): </strong>" + d.GF + " - " + d.GA
+                        + "<br/><strong>Manager : </strong>" + d.manager + "(" + d.country + ")");
             }
             else {
                 tooltip.style("opacity", 1)
@@ -708,7 +724,8 @@ function dot_plot(svg, data, duration, delay, height, xDomain, yDomain) {
                     .html("<strong>Year: </strong>" + d.year
                         + "</strong></font><br/><strong>League Position: </strong>" + d.pos
                         + "</strong></font><br/><strong>Points: </strong>" + d.points
-                        + "<br/><strong>Goals (GF - GA): </strong>" + d.GF + " - " + d.GA);
+                        + "<br/><strong>Goals (GF - GA): </strong>" + d.GF + " - " + d.GA
+                        + "<br/><strong>Manager : </strong>" + d.manager + "(" + d.country + ")");
             }
         })
         .on("mouseout", function () { tooltip.style("opacity", 0); })
