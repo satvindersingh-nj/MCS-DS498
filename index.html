@@ -47,7 +47,7 @@
             <!-- Visualization Section  -->
             <div id="left_message_block" class="left_message_section">
                 <div id="message" class="message_text_small">
-                    <p><font color="#ff0000" size="4"><strong>The Champs</strong></font></p>Manchester United have won more Premier League tropies than any other professional football team, with the most Champions League qualifications.
+                    <p><font color="#ff0000" size="4"><strong>The Champs</strong></font></p>Manchester United have won more Premier League tropies than any other professional football team, with the most Champions League qualifications. They have donned the football map for over a century and one of the most revered and famouse teams.
                     <p>&nbsp;</p>
                     <p><font size="2">Hover over each dot for the scorecard.</font></p>
                 </div>
@@ -82,84 +82,80 @@
         var width = 1400 - margin.left - margin.right;
         var height = 600 - margin.top - margin.bottom;
 
-        if (id === 1) {
-            // Remove everything associated with the SVG tag
-            d3.selectAll("svg").remove();
-            // Initialize
-            d3.select("#svg_block")
-                .append("svg")
-                .attr("id", "dataviz")
-                .attr("width", 1450)
-                .attr("height", 600);
-            document.getElementById("message").innerHTML = "<p><font color=\"#ff0000\" size=\"4\"><strong>The Champs</strong></font></p>Manchester United have won more Premier League tropies than any other professional football team, with the most Champions League qualifications.<p>&nbsp;</p><p><font size=\"2\">Hover over each dot for the scorecard.</font></p>";
+        if (id === 1) {            
+            init_svg_block();
+
+            document.getElementById("message").innerHTML = "<p><font color=\"#ff0000\" size=\"4\"><strong>The Champs</strong></font></p>Manchester United have won more Premier League tropies than any other professional football team, with the most Champions League qualifications. They have donned the football map for over a century and one of the most revered and famouse teams.<p>&nbsp;</p><p><font size=\"2\">Hover over each dot for the scorecard.</font></p>";
             // Call the Visualization
             visualization_1(margin, width, height, true);
+
             // Update the navigation buttons
-            document.getElementById("page1").classList.add("active");
-            document.getElementById("page2").classList.remove("active");
-            document.getElementById("page3").classList.remove("active");
-            document.getElementById("page4").classList.remove("active");
-            document.getElementById("page5").classList.remove("active");
+            navigation_buttons(true, false, false, false, false);
         }
 
         if (id === 2) {
-            // Remove everything associated with the SVG tag
-            d3.selectAll("svg").remove();
-            // Initialize
-            d3.select("#svg_block")
-                .append("svg")
-                .attr("id", "dataviz")
-                .attr("width", 1450)
-                .attr("height", 600);
-            document.getElementById("message").innerHTML = "<p><font color=\"#ff0000\" size=\"4\"><strong>Pre \"Alex\" Era</strong></font></p>Manchester United positions before Sir Alex Ferguson made a managerial debut at United.<p>&nbsp;</p><p><font size=\"2\">Hover over each dot for the scorecard.</font></p>";
+            init_svg_block();
+
+            document.getElementById("message").innerHTML = "<p><font color=\"#ff0000\" size=\"4\"><strong>Pre \"Alex Ferguson\"<br/> Era</strong></font></p>Manchester United positions before Sir Alex Ferguson made a managerial debut at United.<p>&nbsp;</p><p><font size=\"2\">Hover over each dot for the scorecard.</font></p>";
             // Call the Visualization
             visualization_2(margin, width, height, true);
 
-            document.getElementById("page1").classList.remove("active");
-            document.getElementById("page2").classList.add("active");
-            document.getElementById("page3").classList.remove("active");
-            document.getElementById("page4").classList.remove("active");
-            document.getElementById("page5").classList.remove("active");
+            // Update the navigation buttons
+            navigation_buttons(false, true, false, false, false);
         }
 
         if (id === 3) {
-            // Remove everything associated with the SVG tag
-            d3.selectAll("svg").remove();
-            // Initialize
-            d3.select("#svg_block")
-                .append("svg")
-                .attr("id", "dataviz")
-                .attr("width", 1450)
-                .attr("height", 600);
+            init_svg_block();
+
             document.getElementById("message").innerHTML = "<p><font color=\"#ff0000\" size=\"4\"><strong>The \"Alex\" Era</strong></font></p>In 2013 Sir Alex Ferguson takes over as manager for Manchester United.<p>&nbsp;</p><p><font size=\"2\">Hover over each dot for the scorecard.</font></p>";
             // Call the Visualization
             visualization_3(margin, width, height, true);
 
-            document.getElementById("page1").classList.remove("active");
-            document.getElementById("page2").classList.remove("active");
-            document.getElementById("page3").classList.add("active");
-            document.getElementById("page4").classList.remove("active");
-            document.getElementById("page5").classList.remove("active");
+            // Update the navigation buttons
+            navigation_buttons(false, false, true, false, false);
         }
 
         if (id === 4) {
-            // Remove everything associated with the SVG tag
-            d3.selectAll("svg").remove();
-            // Initialize
-            d3.select("#svg_block")
-                .append("svg")
-                .attr("id", "dataviz")
-                .attr("width", 1450)
-                .attr("height", 600);
+            init_svg_block();
+
             document.getElementById("message").innerHTML = "<p><font color=\"#ff0000\" size=\"4\"><strong>Post \"Alex\" Era</strong></font></p>In June 2013, Sir Alex Ferguson resigns as manager for Manchester United on health reasons.<p>&nbsp;</p><p><font size=\"2\">Hover over each dot for the scorecard.</font></p>";
             // Call the Visualization
             visualization_4(margin, width, height, true);
 
-            document.getElementById("page1").classList.remove("active");
-            document.getElementById("page2").classList.remove("active");
-            document.getElementById("page3").classList.remove("active");
-            document.getElementById("page4").classList.add("active");
-            document.getElementById("page5").classList.remove("active");
+            // Update the navigation buttons
+            navigation_buttons(false, false, false, true, false);
         }
+
+        if (id === 5) {
+            init_svg_block();
+
+            document.getElementById("message").innerHTML = "<p><font color=\"#ff0000\" size=\"4\"><strong>Post \"Alex\" Era</strong></font></p>In June 2013, Sir Alex Ferguson resigns as manager for Manchester United on health reasons.<p>&nbsp;</p><p><font size=\"2\">Hover over each dot for the scorecard.</font></p>";
+            // Call the Visualization
+            visualization_5(margin, width, height, false);
+
+            navigation_buttons(false, false, false, false, true);
+        }
+    }
+
+    function init_svg_block() {
+
+        // Remove everything associated with the SVG tag
+        d3.selectAll("svg").remove();
+
+        // Initialize
+        d3.select("#svg_block")
+            .append("svg")
+            .attr("id", "dataviz")
+            .attr("width", 1450)
+            .attr("height", 600);
+    }
+
+    function navigation_buttons(but1, but2, but3, but4, but5) {
+
+        if (but1) document.getElementById("page1").classList.add("active"); else document.getElementById("page1").classList.remove("active");
+        if (but2) document.getElementById("page2").classList.add("active"); else document.getElementById("page2").classList.remove("active");
+        if (but3) document.getElementById("page3").classList.add("active"); else document.getElementById("page3").classList.remove("active");
+        if (but4) document.getElementById("page4").classList.add("active"); else document.getElementById("page4").classList.remove("active");
+        if (but5) document.getElementById("page5").classList.add("active"); else document.getElementById("page5").classList.remove("active");
     }
 </script>
